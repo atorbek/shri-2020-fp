@@ -31,8 +31,7 @@ import {
   has,
   anyPass,
   and,
-  converge,
-  or
+  converge
 } from 'ramda';
 
 const { TRIANGLE, CIRCLE, SQUARE, STAR } = SHAPES;
