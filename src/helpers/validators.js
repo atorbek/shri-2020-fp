@@ -80,28 +80,31 @@ export const validateFieldN4 = (shapes) => {
 // 5. Три фигуры одного любого цвета кроме белого (четыре фигуры одного цвета – это тоже true).
 export const validateFieldN5 = (shapes) => {
   const invertObjectColors = compose(invert, getColors)(shapes);
-  const is3FiguresNotWhite = compose(not, equals([WHITE]), prop(3));
-  const has3FiguresAndNotWhite = converge(and, [has(3), is3FiguresNotWhite]);
+  const is3ShapesNotWhite = compose(not, equals([WHITE]), prop(3));
+  const has3ShapesAndNotWhite = converge(and, [has(3), is3ShapesNotWhite]);
 
-  return anyPass([has(4), has3FiguresAndNotWhite])(invertObjectColors);
+  return anyPass([has(4), has3ShapesAndNotWhite])(invertObjectColors);
 };
 
 // 6. Две зеленые фигуры (одна из них треугольник), еще одна любая красная.
 export const validateFieldN6 = (shapes) => {
-  const invertFigures = invert(shapes);
-  const greensFigures = prop(GREEN);
-  const includeTriangle = compose(includes(TRIANGLE), greensFigures);
-  const greensEqualsTwo = compose(equals(2), length, greensFigures);
+  const invertShapes = invert(shapes);
+  const greensShapes = prop(GREEN);
+  const includeTriangle = compose(includes(TRIANGLE), greensShapes);
+  const greensGreaterOrEqualsTwo = compose(gte(__, 2), length, greensShapes);
 
-  return allPass([has(RED), has(GREEN), includeTriangle, greensEqualsTwo])(
-    invertFigures
-  );
+  return allPass([
+    has(RED),
+    has(GREEN),
+    includeTriangle,
+    greensGreaterOrEqualsTwo
+  ])(invertShapes);
 };
 
 // 7. Все фигуры оранжевые.
 export const validateFieldN7 = (shapes) => {
-  const allFiguresIsOrange = propEq(ORANGE, 4);
-  return compose(allFiguresIsOrange, getColors)(shapes);
+  const allShapesIsOrange = propEq(ORANGE, 4);
+  return compose(allShapesIsOrange, getColors)(shapes);
 };
 
 // 8. Не красная и не белая звезда.
@@ -114,8 +117,8 @@ export const validateFieldN8 = (shapes) => {
 
 // 9. Все фигуры зеленые.
 export const validateFieldN9 = (shapes) => {
-  const allFiguresIsGreen = propEq(GREEN, 4);
-  return compose(allFiguresIsGreen, getColors)(shapes);
+  const allShapesIsGreen = propEq(GREEN, 4);
+  return compose(allShapesIsGreen, getColors)(shapes);
 };
 
 // 10. Треугольник и квадрат одного цвета (не белого)
