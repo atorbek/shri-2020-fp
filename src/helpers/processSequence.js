@@ -61,8 +61,6 @@ const processSequence = ({ value, writeLog, handleSuccess, handleError }) => {
       to: 2,
       number
     });
-
-  const animalById = (id) => get(`https://animals.tech/${id}`, {});
   const result = ({ result }) => result;
   const binaryNumber = pipe(
     convertToBinary,
@@ -70,6 +68,7 @@ const processSequence = ({ value, writeLog, handleSuccess, handleError }) => {
     andThen(tapWriteLog)
   );
 
+  const animalById = (id) => get(`https://animals.tech/${id}`, {});
   const animal = pipe(animalById, andThen(result), andThen(tapWriteLog));
   const len = pipe(length, tapWriteLog);
   const pow = pipe(multiply(__, 2), tapWriteLog);
